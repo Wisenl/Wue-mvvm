@@ -1,4 +1,5 @@
-import initWue from './initWue'
+import { initState } from './initWue'
+import compiler from './compiler'
 // 创建一个 Wue 类
 class Wue {
   constructor (wueOption) {
@@ -7,9 +8,11 @@ class Wue {
     this.$data = wueOption.data
     // 初始化
     this._init()
+    // 编译
+    compiler(this)
   }
   _init() {
-    initWue(this)
+    initState(this)
   }
 }
 

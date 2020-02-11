@@ -1,6 +1,6 @@
 import Wue from 'Wue'  // webpack 中 配置了路径，可直接写模块名称
 
-const Wm = new Wue({
+window.wm = new Wue({
   el: '#app',
   data: {
     work: 'doctor',
@@ -8,7 +8,7 @@ const Wm = new Wue({
     sun: {name: 'Jobs'}
   }
 })
-
+console.log('this', this)
 setImmediate(()=> {
-  console.log(Wm.el)
+  // console.log(wm.el)
 })
