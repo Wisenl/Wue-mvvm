@@ -1,4 +1,5 @@
 import { interceptArray } from './interceptArray'
+import Dep from '../dep'
 export default class Observer {
   constructor (data) {
     Observer.walk(data)
@@ -6,8 +7,12 @@ export default class Observer {
 
   static observe(data, key, val) {
     Observer.walk(val)
+    let dep = new Dep()
     Object.defineProperty(data, key, {
       get() {
+        if (Dep.target) {
+          dep.depend()
+        }
         console.log('取值')
         return val
       },
@@ -16,6 +21,7 @@ export default class Observer {
         console.log('设值')
         Observer.walk(newVal)  // 对设置的新值，进行监测
         val = newVal
+        dep.notify()
       }
     })
   }

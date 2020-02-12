@@ -9,7 +9,9 @@ window.wm = new Wue({
     arr: []
   }
 })
-console.log('this', this)
 setImmediate(()=> {
   // console.log(wm.el)
 })
+setTimeout(() => {
+  wm.work = 'teacher'
+}, 1000)

@@ -12,7 +12,10 @@ function getWmValue (wm, str) { // son.name
 function compile(fragmentEl, wm) {
   Array.from(fragmentEl.childNodes).forEach(x => {
     if (x.nodeType === 3) {
-      x.textContent = x.textContent.replace(/\{\{((?:.|\r?\n)+?)\}\}/g, function (...args) {
+      if (!x.temp) {
+        x.temp = x.textContent
+      }
+      x.textContent = x.temp.replace(/\{\{((?:.|\r?\n)+?)\}\}/g, function (...args) {
         return getWmValue(wm, args[1].trim())
       })
     } else if (x.nodeType === 1) {
@@ -22,14 +25,11 @@ function compile(fragmentEl, wm) {
 }
 
 export default function (wm) {
-  if (typeof wm.$el === 'string') {
-    let elem = window.document.querySelector('#app')
-    let fragmentEl = document.createDocumentFragment()
-    let childEl
-    while (childEl = elem.firstChild) {
-      fragmentEl.appendChild(childEl)
-    }
-    compile(fragmentEl, wm)
-    elem.appendChild(fragmentEl)
+  let fragmentEl = document.createDocumentFragment()
+  let childEl
+  while (childEl = wm.$el.firstChild) {
+    fragmentEl.appendChild(childEl)
   }
+  compile(fragmentEl, wm)
+  wm.$el.appendChild(fragmentEl)
 }
