@@ -8,6 +8,7 @@ function getWmValue (wm, str) { // son.name
     return res
   }, wm.$data)
 }
+
 function compile(fragmentEl, wm) {
   Array.from(fragmentEl.childNodes).forEach(x => {
     if (x.nodeType === 3) {
@@ -19,6 +20,7 @@ function compile(fragmentEl, wm) {
     }
   })
 }
+
 export default function (wm) {
   if (typeof wm.$el === 'string') {
     let elem = window.document.querySelector('#app')
