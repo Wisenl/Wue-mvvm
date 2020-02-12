@@ -5,7 +5,7 @@ window.wm = new Wue({
   data: {
     work: 'doctor',
     age: 10,
-    sun: {name: 'Jobs'},
+    son: {name: 'Jobs'},
     arr: []
   }
 })

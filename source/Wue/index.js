@@ -16,7 +16,6 @@ class Wue {
   }
   // 更新方法
   _update() {
-    console.log('__update__')
     // 编译
     compiler(this)
   }
@@ -27,7 +26,7 @@ class Wue {
     } else {
       this.$el = this.$options.el
     }
-    // 用于首次渲染的 watcher
+    // 用于首次渲染的 watcher，每个 Wue 实例都有唯一一个渲染 watcher
     new Watcher(this, () => {
       this._update() // 创建对象时就需要 触发一次 _update
     })

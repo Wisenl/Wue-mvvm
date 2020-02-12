@@ -7,6 +7,10 @@ export default class Observer {
 
   static observe(data, key, val) {
     Observer.walk(val)
+    // 每创建一个 需要观察的对象属性， 就创建一个 dep， 这个 dep 会
+    // 在 compile 的后执行属性get() 后，把自己添加到 watcher 的 deps 中，
+    // 同时也会把 watcher 添加到 自己的 subs 中
+    // dep 和 watcher 是发布订阅的关系
     let dep = new Dep()
     Object.defineProperty(data, key, {
       get() {
@@ -21,6 +25,7 @@ export default class Observer {
         console.log('设值')
         Observer.walk(newVal)  // 对设置的新值，进行监测
         val = newVal
+        // 数据更新时，触发dep 中的 watcher.update, 重新渲染
         dep.notify()
       }
     })

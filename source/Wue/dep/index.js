@@ -3,7 +3,8 @@
 class Dep {
   constructor () {
     this.id = Dep.id++
-    this.deps = []
+    console.log('id:', this.id)
+    this.subs = [] // 收集 watcher 作为依赖，如果没有用户手写的 watcher，则只会保存唯一一个渲染 watcher
   }
   static pushTarget(watcher) {
     Dep.stack.push(watcher)
@@ -16,11 +17,10 @@ class Dep {
   }
   // 收集依赖
   addSub(watcher) {
-    this.deps.push(watcher)
+    this.subs.push(watcher)
   }
   notify() {
-    console.log(this.deps, 'deps')
-    this.deps.forEach(x => x.update())
+    this.subs.forEach(x => x.update())
   }
   depend() {
     Dep.target.addDep(this)

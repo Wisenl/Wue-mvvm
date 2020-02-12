@@ -13,7 +13,7 @@ export default class Watcher {
     this.options = opts
     this.fn = fn
 
-    this.deps = []
+    this.deps = [] // 保存了当前 watcher 被依赖的 所有 dep 对象，watcher 和 dep 对象互相依赖（必然）
     this.depIds = new Set()
 
     if (typeof expOrFn === 'function') {
@@ -21,24 +21,28 @@ export default class Watcher {
       this.getter = expOrFn  // 赋值到getter
     }
     id++
-    console.log('id:', id)
     // 执行传入的 expOrFn
     this.get()
   }
   get() {
-    console.log('watcher get')
+    // new watcher 对象时先把它 设置为 target
     Dep.pushTarget(this)
+    // 然后执行 update(),渲染页面
     this.getter()
+    // 渲染结束后，清空 target
     Dep.popTarget()
   }
   addDep(dep) {
+    // watcher 和 dep 互相依赖
     if (!this.depIds.has(dep.id)) {
       this.depIds.add(dep.id)
       this.deps.push(dep)
+      // 收集依赖
       dep.addSub(this)
     }
   }
   update() {
+    console.log('watcher update')
     this.get()
   }
 }
