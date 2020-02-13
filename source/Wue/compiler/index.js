@@ -1,4 +1,4 @@
-function getWmValue (wm, str) { // son.name
+export function getWmValue (wm, str) { // son.name
   const keys = str.split('.') // [son, name]
   return keys.reduce((res, curr) => {
     res = res[curr]

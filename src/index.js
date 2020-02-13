@@ -7,6 +7,11 @@ window.wm = new Wue({
     age: 10,
     son: {name: 'Jobs'},
     arr: [['a','b'], {a: 'a'}, 2, 3]
+  },
+  watch: {
+    age () {
+      console.log('age change')
+    }
   }
 })
 setImmediate(()=> {
@@ -20,4 +25,7 @@ setTimeout(() => {
   })
   wm.work = '11'
   console.log('xixixi')
+  wm.$watch('work', () => {
+    console.log('work change')
+  })
 }, 1000)

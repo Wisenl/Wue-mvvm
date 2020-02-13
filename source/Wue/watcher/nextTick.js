@@ -3,10 +3,9 @@ let cbs = []
 function runCallbacks () {
   cbs.forEach(cb => cb())
 }
-
+// TODO 待优化
 export function nextTick (cb) {
   cbs.push(cb)
-  console.log('cb')
   const timeFn =() => {
     runCallbacks()
   }

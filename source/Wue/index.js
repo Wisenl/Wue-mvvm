@@ -1,4 +1,4 @@
-import { initState } from './initWue'
+import { initState, initWatch, createWatcher } from './initWue'
 import Watcher from './watcher/index'
 import compiler from './compiler'
 import { nextTick } from './watcher/nextTick'
@@ -7,6 +7,7 @@ class Wue {
   constructor (wueOption) {
     this.$options = wueOption
     this.$data = wueOption.data
+    this.$watch = this._watch
     this.$mount = this._mount
     this.$nextTick = nextTick
     // 初始化
@@ -14,12 +15,16 @@ class Wue {
   }
   _init() {
     initState(this)
+    initWatch(this)
     this.$mount()
   }
   // 更新方法
   _update() {
     // 编译
     compiler(this)
+  }
+  _watch(key, cb) {
+    return createWatcher(this, key, cb)
   }
   // 挂载方法
   _mount() {
