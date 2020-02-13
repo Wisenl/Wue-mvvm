@@ -1,10 +1,7 @@
 function getWmValue (wm, str) { // son.name
   const keys = str.split('.') // [son, name]
-  console.log(str)
   return keys.reduce((res, curr) => {
-    console.log(res, curr)
     res = res[curr]
-    console.log(res, curr)
     return res
   }, wm.$data)
 }

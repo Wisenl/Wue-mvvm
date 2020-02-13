@@ -16,8 +16,6 @@ export function interceptArray () {
     // 劫持该方法
     interceptProto[methodsName] = function (...args) {
       // 插入 自定义 代码
-      console.log('进行了数组方法劫持！')
-
 
       // 如果 数组新增的元素也为对象，就也要进行监测
       if (['push', 'unshift', 'splice'].includes(methodsName)) {
@@ -27,10 +25,12 @@ export function interceptArray () {
         } else {
           inserts = args
         }
-        new Observer(inserts)
+        Observer.walk(inserts)
       }
       // 返回
-      return Array.prototype[methodsName].call(this, ...args)
+      let res = Array.prototype[methodsName].call(this, ...args)
+      this.__ob__.dep.notify()
+      return res
     }
   })
 

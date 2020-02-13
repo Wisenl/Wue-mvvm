@@ -1,6 +1,6 @@
 import Dep from '../dep'
 let id = 0
-export default class Watcher {
+export default class  Watcher {
   /**
    * @param vm
    * @param expOrFn exprOrFn 用户可能传入的是一个表达式 也有可能传入的是一个函数
@@ -17,7 +17,6 @@ export default class Watcher {
     this.depIds = new Set()
 
     if (typeof expOrFn === 'function') {
-      console.log('set Getter')
       this.getter = expOrFn  // 赋值到getter
     }
     id++
@@ -42,7 +41,6 @@ export default class Watcher {
     }
   }
   update() {
-    console.log('watcher update')
     this.get()
   }
 }

@@ -3,13 +3,11 @@
 class Dep {
   constructor () {
     this.id = Dep.id++
-    console.log('id:', this.id)
     this.subs = [] // 收集 watcher 作为依赖，如果没有用户手写的 watcher，则只会保存唯一一个渲染 watcher
   }
   static pushTarget(watcher) {
     Dep.stack.push(watcher)
     Dep.target = watcher
-    console.log(Dep.target, 'Dep target')
   }
   static popTarget() {
     Dep.stack.pop()

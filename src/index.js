@@ -6,7 +6,7 @@ window.wm = new Wue({
     work: 'doctor',
     age: 10,
     son: {name: 'Jobs'},
-    arr: []
+    arr: [1, 2, 3]
   }
 })
 setImmediate(()=> {
