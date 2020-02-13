@@ -1,12 +1,14 @@
 import { initState } from './initWue'
-import Watcher from './watcher'
+import Watcher from './watcher/index'
 import compiler from './compiler'
+import { nextTick } from './watcher/nextTick'
 // 创建一个 Wue 类
 class Wue {
   constructor (wueOption) {
     this.$options = wueOption
     this.$data = wueOption.data
     this.$mount = this._mount
+    this.$nextTick = nextTick
     // 初始化
     this._init()
   }

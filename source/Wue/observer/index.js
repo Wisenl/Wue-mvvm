@@ -1,4 +1,4 @@
-import { interceptArray } from './interceptArray'
+import { interceptArray, deepArrayDepend } from './interceptArray'
 import Dep from '../dep'
 export default class Observer {
   constructor (data) {
@@ -35,6 +35,7 @@ export default class Observer {
           dep.depend() // 对象数据的依赖存储
           if (childOb) {
             childOb.dep.depend() // 数组数据的依赖存储
+            deepArrayDepend(val) // 递归收集 Array 依赖  // arr: [['a'], 'b', 'c']
           }
         }
         return val

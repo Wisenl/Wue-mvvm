@@ -33,6 +33,14 @@ export function interceptArray () {
       return res
     }
   })
-
   return interceptProto
+}
+
+export function deepArrayDepend (arr) {
+  if (Array.isArray(arr)) {
+    arr.forEach(item => {
+      item.__ob__ && item.__ob__.dep.depend()
+      deepArrayDepend(item)
+    })
+  }
 }

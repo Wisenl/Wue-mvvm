@@ -6,7 +6,7 @@ window.wm = new Wue({
     work: 'doctor',
     age: 10,
     son: {name: 'Jobs'},
-    arr: [1, 2, 3]
+    arr: [['a','b'], {a: 'a'}, 2, 3]
   }
 })
 setImmediate(()=> {
@@ -14,4 +14,10 @@ setImmediate(()=> {
 })
 setTimeout(() => {
   wm.work = 'teacher'
+  wm.arr[1].a = 'aa'
+  wm.$nextTick(() => {
+    console.log('nextTick')
+  })
+  wm.work = '11'
+  console.log('xixixi')
 }, 1000)

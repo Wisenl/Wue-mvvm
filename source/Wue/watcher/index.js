@@ -1,4 +1,6 @@
 import Dep from '../dep'
+import { nextTick } from './nextTick'
+
 let id = 0
 export default class  Watcher {
   /**
@@ -41,6 +43,28 @@ export default class  Watcher {
     }
   }
   update() {
+    setQueue(this)
+  }
+  runGet() {
+    console.log('run')
     this.get()
   }
+}
+// 收集watcher，进行异步更新
+let watcherQueue = []
+let watcherIds = []
+function setQueue (watcher) {
+  let id = watcher.id
+  if (!watcherIds.includes(id)) {
+    watcherIds.push(id)
+    watcherQueue.push(watcher)
+    nextTick(runQueue)
+  }
+}
+
+function runQueue () {
+  watcherQueue.forEach(watcher => watcher.runGet())
+  // 执行完后清空
+  watcherIds = []
+  watcherQueue = []
 }
