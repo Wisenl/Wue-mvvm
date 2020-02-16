@@ -11,6 +11,10 @@ window.wm = new Wue({
   watch: {
     age () {
       console.log('age change')
+    },
+    work: {
+      handler(n, o) { console.log('work changed', n, o)},
+      immediate: true
     }
   }
 })
@@ -20,12 +24,11 @@ setImmediate(()=> {
 setTimeout(() => {
   wm.work = 'teacher'
   wm.arr[1].a = 'aa'
-  wm.$nextTick(() => {
-    console.log('nextTick')
-  })
+  // wm.$nextTick(() => {
+  //   console.log('nextTick')
+  // })
   wm.work = '11'
-  console.log('xixixi')
-  wm.$watch('work', () => {
-    console.log('work change')
+  wm.$watch('son', () => {
+    console.log('son change')
   })
 }, 1000)

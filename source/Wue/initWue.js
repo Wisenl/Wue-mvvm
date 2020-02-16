@@ -24,13 +24,18 @@ export function initState (wm) {
   new Observe(data)
 }
 
-export function createWatcher (wm, key, cb) {
-  new Watcher(wm, key, cb, {user: true})
+export function createWatcher (wm, key, cb, opts) {
+  new Watcher(wm, key, cb, {user: true, ...opts})
 }
 export function initWatch (wm) {
   let watchObj = wm.$options.watch
   for (let key in watchObj) {
-    createWatcher(wm, key, watchObj[key])
+    let userDef = watchObj[key]
+    let handler = userDef
+    if (userDef.handler) {
+      handler = userDef.handler
+    }
+    createWatcher(wm, key, handler, {immediate: userDef.immediate})
   }
   let watch = wm.$options.wm
 }

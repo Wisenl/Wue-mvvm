@@ -16,6 +16,8 @@ export default class  Watcher {
     this.expOrFn = expOrFn
     this.options = opts
     this.fn = fn
+    this.user = !!opts.user
+    this.immediate = !!opts.immediate
 
     this.deps = [] // 保存了当前 watcher 被依赖的 所有 dep 对象，watcher 和 dep 对象互相依赖（必然）
     this.depIds = new Set()
@@ -23,12 +25,16 @@ export default class  Watcher {
     if (typeof expOrFn === 'function') {
       this.getter = expOrFn  // 赋值到getter
     } else {
+      // 如果不是 function, 那么就是用户自定义的 $watch， 传入的是个 $data 属性名。
       this.getter = function () {
         return getWmValue(vm, this.expOrFn)
       }
     }
     // 执行传入的 expOrFn
     this.value = this.get()
+    if (this.immediate) {
+      this.fn(this.value)
+    }
   }
   get() {
     // new watcher 对象时先把它 设置为 target
@@ -54,6 +60,7 @@ export default class  Watcher {
   runGet() {
     let val =this.get()
     if (val !== this.value) {
+      // 调用用户定义的callback 传入 newValue, 和 oldValue
       this.fn(val, this.value)
     }
   }
