@@ -19,21 +19,16 @@ export default class  Watcher {
     this.user = !!opts.user
     this.immediate = !!opts.immediate
     this.lazy = opts.lazy
-    console.log('lazy:', this.lazy)
     this.dirty = this.lazy
 
     this.deps = [] // 保存了当前 watcher 被依赖的 所有 dep 对象，watcher 和 dep 对象互相依赖（必然）
     this.depIds = new Set()
 
-    console.log(this.expOrFn, '-------')
-
     if (typeof expOrFn === 'function') {
-      console.log(this.expOrFn, '---')
       this.getter = expOrFn  // 赋值到getter
     } else {
       // 如果不是 function, 那么就是用户自定义的 $watch， 传入的是个 $data 属性名。
       this.getter = function () {
-        console.log(this.expOrFn, '0000')
         return getWmValue(wm, expOrFn)
       }
     }
@@ -54,11 +49,9 @@ export default class  Watcher {
   }
   evaluate() {
     this.value = this.get()
-    console.log('value', this.value)
     this.dirty = false // false 表示此次求过值了，下次直接返回 缓存的 computed 值，
   }
   depend() {
-    console.log(this.deps, 'deps==============')
     // 此处 this 为计算属性watcher
     this.deps.forEach(x => { // this.deps 上的值来自此前 调用 getter 时候，求值函数中的data依赖。
       // 此时 target 为 渲染 watcher，但是调用此depend 的不是渲染watcher，而是计算属性watcher

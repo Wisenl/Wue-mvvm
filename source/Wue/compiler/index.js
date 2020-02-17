@@ -3,7 +3,7 @@ export function getWmValue (wm, str) { // son.name
   return keys.reduce((res, curr) => {
     res = res[curr]
     return res
-  }, wm.$data)
+  }, wm)
 }
 
 function compile(fragmentEl, wm) {
