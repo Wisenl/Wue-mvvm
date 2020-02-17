@@ -6,7 +6,9 @@ window.wm = new Wue({
     work: 'doctor',
     age: 10,
     son: {name: 'Jobs'},
-    arr: [['a','b'], {a: 'a'}, 2, 3]
+    arr: [['a','b'], {a: 'a'}, 2, 3],
+    day: '10',
+    time: '10:10'
   },
   watch: {
     age () {
@@ -15,6 +17,11 @@ window.wm = new Wue({
     work: {
       handler(n, o) { console.log('work changed', n, o)},
       immediate: true
+    }
+  },
+  computed: {
+    date () {
+      return this.day + '-' + this.time
     }
   }
 })

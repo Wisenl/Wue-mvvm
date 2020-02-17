@@ -1,4 +1,4 @@
-import { initState, initWatch, createWatcher } from './initWue'
+import { initState, initComputed, initWatch, createWatcher } from './initWue'
 import Watcher from './watcher/index'
 import compiler from './compiler'
 import { nextTick } from './watcher/nextTick'
@@ -15,6 +15,7 @@ class Wue {
   }
   _init() {
     initState(this)
+    initComputed(this)
     initWatch(this)
     this.$mount()
   }
